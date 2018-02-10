@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu # wouldn't work with alpine
 ENV LANG C.UTF-8
 RUN apt-get update && apt-get -qqqy install curl
 RUN cd
