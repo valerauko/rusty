@@ -4,7 +4,6 @@ use std::io::prelude::*;
 use std::path::Path;
 use std::fs::File;
 use std::process::Command;
-extern crate id3;
 
 fn main() {
     let path = env::args().nth(1).expect("I'll need a file to open...");
@@ -42,21 +41,22 @@ fn copy_file(file: &str, base: &String) {
         println!("File '{}' doesn't exist.", file);
         return;
     }
-    let tag = id3::Tag::read_from_path(path).unwrap();
-    let folder = format!("{} - {}", tag.artist().unwrap(), tag.album().unwrap());
-    let full_path = &format!("{}/{}", base, folder);
-    let exists_raw = Command::new("gio").arg("info").arg(full_path)
-                                        .output().expect("Hurr");
-    if !exists_raw.status.success() {
-        let f = Command::new("gio").arg("mkdir").arg(full_path).output().expect("Durr");
-        if f.status.success() {
-            println!("Folder created: {}", folder);
-        }
-    }
+    // keeps shitting itself with random files. fuck it.
+    // let tag = id3::Tag::read_from_path(&path).expect("What the fuck");
+    // let folder = format!("{} - {}", tag.artist().expect("Foo"), tag.album().expect("Bar"));
+    // let full_path = &format!("{}/{}", base, folder);
+    // let exists_raw = Command::new("gio").arg("info").arg(full_path)
+    //                                     .output().expect("Hurr");
+    // if !exists_raw.status.success() {
+    //     let f = Command::new("gio").arg("mkdir").arg(full_path).output().expect("Durr");
+    //     if f.status.success() {
+    //         println!("Folder created: {}", folder);
+    //     }
+    // }
 
-    let s = Command::new("gio").arg("copy").arg(path).arg(full_path).output().expect("Murr");
+    let s = Command::new("gio").arg("copy").arg(path).arg(base).output().expect("Murr");
     if s.status.success() {
         let file = path.file_name().unwrap().to_str().unwrap();
-        println!("File copied: {}/{}", folder, file);
+        println!("File copied: {}", file);
     }
 }

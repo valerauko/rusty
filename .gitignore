@@ -11,3 +11,6 @@
 /target/
 **/*.rs.bk
 Cargo.lock
+
+# the file i use for testing
+sample.m3u
