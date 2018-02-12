@@ -41,18 +41,6 @@ fn copy_file(file: &str, base: &String) {
         println!("File '{}' doesn't exist.", file);
         return;
     }
-    // keeps shitting itself with random files. fuck it.
-    // let tag = id3::Tag::read_from_path(&path).expect("What the fuck");
-    // let folder = format!("{} - {}", tag.artist().expect("Foo"), tag.album().expect("Bar"));
-    // let full_path = &format!("{}/{}", base, folder);
-    // let exists_raw = Command::new("gio").arg("info").arg(full_path)
-    //                                     .output().expect("Hurr");
-    // if !exists_raw.status.success() {
-    //     let f = Command::new("gio").arg("mkdir").arg(full_path).output().expect("Durr");
-    //     if f.status.success() {
-    //         println!("Folder created: {}", folder);
-    //     }
-    // }
 
     let s = Command::new("gio").arg("copy").arg(path).arg(base).output().expect("Murr");
     if s.status.success() {
